@@ -12,6 +12,11 @@
 		todos = [...todos, newTodo]
 		value = ''
 	}
+
+	const deleteTodo = (i) => {
+		todos.splice(i, 1)
+		todos = todos
+	}
 </script>
 
 <main>
@@ -22,8 +27,11 @@
 
 	{#if todos.length > 0}
 		<ul>
-	{#each todos as todo (todo.id)}
-			<li>{todo.label}({todo.id})</li>
+	{#each todos as todo, i (todo.id)}
+			<li>
+				{todo.label}({todo.id})
+				<button type="button" on:click={deleteTodo(i)}>削除</button>
+			</li>
 	{/each}
 		</ul>
 	{:else}
