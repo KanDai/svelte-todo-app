@@ -1,40 +1,40 @@
 <script>
 	let value = ''
-	let todos = []
-	let lastId = todos.length ? todos[todos.length - 1].id : 0
+	let tasks = []
+	let lastId = tasks.length ? tasks[tasks.length - 1].id : 0
 
-	const addTodo = () => {
+	const addTask = () => {
 		lastId += 1
-		const newTodo = {
+		const newTask = {
 			id: lastId,
 			label: value
 		}
-		todos = [...todos, newTodo]
+		tasks = [...tasks, newTask]
 		value = ''
 	}
 
-	const deleteTodo = (i) => {
-		todos.splice(i, 1)
-		todos = todos
+	const deleteTask = (i) => {
+		tasks.splice(i, 1)
+		tasks = tasks
 	}
 </script>
 
 <main>
-	<form on:submit|preventDefault={addTodo}>
+	<form on:submit|preventDefault={addTask}>
 		<input type="text" bind:value />
 		<button type="submit">追加</button>
 	</form>
 
-	{#if todos.length > 0}
+	{#if tasks.length > 0}
 		<ul>
-	{#each todos as todo, i (todo.id)}
+	{#each tasks as task, i (task.id)}
 			<li>
-				{todo.label}({todo.id})
-				<button type="button" on:click={deleteTodo(i)}>削除</button>
+				{task.label}({task.id})
+				<button type="button" on:click={deleteTask(i)}>削除</button>
 			</li>
 	{/each}
 		</ul>
 	{:else}
-		<p>todoがありません</p>
+		<p>タスクがありません</p>
 	{/if}
 </main>
