@@ -1,4 +1,6 @@
 <script>
+	import Task from './Task.svelte';
+
 	let value = ''
 	let tasks = []
 	let lastId = tasks.length ? tasks[tasks.length - 1].id : 0
@@ -13,8 +15,10 @@
 		value = ''
 	}
 
-	const deleteTask = (i) => {
-		tasks.splice(i, 1)
+	const handleEdit = (ev) => tasks[ev.detail.index].label = ev.detail.label
+
+	const handleDelete = (ev) => {
+		tasks.splice(ev.detail.index, 1)
 		tasks = tasks
 	}
 </script>
@@ -28,10 +32,7 @@
 	{#if tasks.length > 0}
 		<ul>
 	{#each tasks as task, i (task.id)}
-			<li>
-				{task.label}({task.id})
-				<button type="button" on:click={deleteTask(i)}>削除</button>
-			</li>
+			<Task {...task} index={i} on:edit={handleEdit} on:delete={handleDelete} />
 	{/each}
 		</ul>
 	{:else}
