@@ -14,7 +14,8 @@
 		lastId += 1
 		const newTask = {
 			id: lastId,
-			label: value
+			label: value,
+			isDone: false
 		}
 		tasks = [...tasks, newTask]
 		localStorage.setItem(idKey, lastId)
@@ -24,6 +25,11 @@
 
 	const handleEdit = (ev) => {
 		tasks[ev.detail.index].label = ev.detail.label
+		localStorage.setItem(taskKey, JSON.stringify(tasks))
+	}
+
+	const handleDone = (ev) => {
+		tasks[ev.detail.index].isDone = ev.detail.checked
 		localStorage.setItem(taskKey, JSON.stringify(tasks))
 	}
 
@@ -43,7 +49,7 @@
 	{#if tasks.length > 0}
 		<ul>
 	{#each tasks as task, i (task.id)}
-			<Task {...task} index={i} on:edit={handleEdit} on:delete={handleDelete} />
+			<Task {...task} index={i} on:edit={handleEdit} on:done={handleDone} on:delete={handleDelete} />
 	{/each}
 		</ul>
 	{:else}
